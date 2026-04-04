@@ -58,32 +58,11 @@ git clone https://github.com/seu-usuario/data-portfolio-template.git
 cd data-portfolio-template
 ```
 
-### 2. Substitua os assets
-
-Coloque seus arquivos na pasta `assets/`:
-
-```
-assets/
-├── IMG.jpg                        # Sua foto de perfil (preferencialmente quadrada)
-├── favicon.png                    # Ícone da aba do browser
-├── github.png                     # Ícone do GitHub (branco, fundo transparente)
-├── linkedin.png                   # Ícone do LinkedIn (branco, fundo transparente)
-├── senac-logo.png                  # Logo da sua instituição de ensino
-├── itau-logo.png                   # Logo da empresa 1
-├── logo-parceiros.png              # Logo da empresa 2
-├── felipe-itau.JPEG                # Foto na empresa 1
-├── imagem-parceiros.jpeg           # Foto na empresa 2
-├── image.png                       # Screenshot do dashboard (projeto 1)
-├── escrevendo_na_quarentena_logo.jpg  # Logo do voluntariado
-├── logo-kapiva.png                 # Logo da atlética/hobbie
-└── [certificados].png              # Logos dos certificados
-```
-
-### 3. Edite o conteúdo
+### 2. Edite o conteúdo
 
 Abra o `index.html` e substitua os textos. Veja a seção [Personalização](#personalização) para um guia detalhado.
 
-### 4. Abra no browser
+### 3. Abra no browser
 
 ```bash
 # Sem servidor (simples)
