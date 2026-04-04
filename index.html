@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+<!-- ============================================================
+  🔧 PERSONALIZE AQUI — Título da aba do navegador
+============================================================ -->
+<title>Seu Nome — Portfólio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- ============================================================
+  🔧 PERSONALIZE AQUI — Favicon (ícone da aba)
+  Substitua assets/favicon.png pela sua imagem (32×32px)
+============================================================ -->
+
+
+<style>
+
+/* ============================================================
+   🔧 PERSONALIZE AQUI — Paleta de cores
+   Troque pelos hex das suas cores e das empresas onde trabalhou
+============================================================ */
+:root {
+  /* Suas cores de marca pessoal */
+  --brand-primary:   #d80816;   /* cor principal (ex: vermelho, azul, etc.) */
+  --brand-secondary: #0e1d8c;   /* cor secundária */
+  --brand-accent:    #feed08;   /* destaque / hover */
+  --brand-dark:      #0f172a;   /* fundo escuro */
+  --brand-white:     #FFFFFF;
+
+  /* Empresa 1 — ajuste conforme o branding */
+  --company1-primary:  #FF6200;
+  --company1-dark:     #2D3238;
+  --company1-white:    #FFFFFF;
+  --company1-gray:     #F4F4F4;
+
+  /* Empresa 2 — ajuste conforme o branding */
+  --company2-blue1:   #254a91;
+  --company2-yellow:  #ffaf00;
+  --company2-blue2:   #2975a8;
+  --company2-white:   #FFFFFF;
+}
+
+*, *::before, *::after {
+  margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif;
+}
+
+html, body {
+  width:100%; height:100%; overflow:hidden; background:#111;
+}
+
+/* ─────────────────────────────────────────
+   DESKTOP SCALER
+───────────────────────────────────────── */
+#presentation-scaler {
+  position:absolute;
+  width:1366px; height:768px;
+  overflow:hidden;
+  transform-origin:top left;
+}
+
+/* ─────────────────────────────────────────
+   BARRA DE PROGRESSO
+───────────────────────────────────────── */
+.progress {
+  position:absolute; top:0; left:0; width:100%; height:4px;
+  background:#ddd; z-index:1000;
+}
+#progressBar {
+  display:block; height:100%; width:0;
+  background:var(--brand-primary); transition:width .3s;
+}
+
+/* ─────────────────────────────────────────
+   DOTS DE NAVEGAÇÃO
+───────────────────────────────────────── */
+.dots {
+  position:absolute; right:16px; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; gap:8px; z-index:1000;
+}
+.dot {
+  width:9px; height:9px; border-radius:50%;
+  background:#aaa; cursor:pointer; transition:background .3s;
+}
+.dot.active { background:var(--brand-primary); }
+
+/* ─────────────────────────────────────────
+   SLIDER
+───────────────────────────────────────── */
+.slider {
+  display:flex;
+  width:1366px; height:768px;
+  transition:transform .6s ease;
+  will-change:transform;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE BASE
+───────────────────────────────────────── */
+.slide {
+  min-width:1366px; width:1366px; height:768px;
+  padding:36px 56px;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.slide > h1 { font-size:34px; margin-bottom:20px; }
+
+/* ─────────────────────────────────────────
+   BACKGROUNDS
+───────────────────────────────────────── */
+.bg-white    { background:var(--brand-white); color:#000; }
+.bg-graphite { background:var(--brand-dark);  color:#fff; }
+.bg-company1 { background:var(--company1-primary); color:#fff; }
+.bg-company2 { background:var(--company2-blue2);   color:#fff; }
+
+.center { display:flex; flex-direction:column; align-items:center; text-align:center; }
+
+/* ─────────────────────────────────────────
+   CAPA / ENCERRAMENTO
+───────────────────────────────────────── */
+.final-slide {
+  position:relative; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,#0f172a,#1e293b); color:#fff; overflow:hidden;
+}
+.final-slide::before {
+  content:""; position:absolute; width:500px; height:500px;
+  background:var(--brand-primary); filter:blur(180px); opacity:0.2;
+  top:-100px; right:-100px;
+}
+.final-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0.4),rgba(0,0,0,0.7));
+}
+.final-content {
+  position:relative; text-align:center; z-index:2;
+  padding:30px; animation:fadeUp 1s ease;
+}
+.final-title    { font-size:54px; font-weight:700; margin-bottom:14px; letter-spacing:-1px; }
+.final-subtitle { font-size:17px; font-weight:500; color:#cbd5f5; margin-bottom:28px; }
+.final-divider  { width:60px; height:4px; background:var(--brand-primary); margin:0 auto 28px; border-radius:10px; }
+.final-contact  { display:flex; justify-content:center; gap:20px; margin-top:18px; }
+.contact-icon {
+  width:52px; height:52px;
+  background:rgba(255,255,255,0.08); border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  transition:.3s; backdrop-filter:blur(10px); text-decoration:none;
+}
+.contact-icon img { width:24px; height:24px; object-fit:contain; filter:brightness(0) invert(1); }
+.contact-icon:hover {
+  transform:translateY(-6px) scale(1.05);
+  background:var(--brand-accent);
+  box-shadow:0 10px 25px rgba(255,98,0,0.4);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0);    }
+}
+
+/* ─────────────────────────────────────────
+   SOBRE MIM
+───────────────────────────────────────── */
+.about-container {
+  display:flex; align-items:center; justify-content:center;
+  gap:36px; margin-top:16px; flex-wrap:nowrap;
+}
+.about-photo {
+  width:170px; height:170px; border-radius:50%;
+  border:6px solid var(--brand-primary);
+  /* 🔧 Substitua pelo caminho da sua foto */
+  background-image:url("assets/profile.jpg");
+  background-size:cover; background-position:center; flex-shrink:0;
+}
+.about-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1; min-width:0;
+}
+.about-box {
+  background:#fff; border-radius:14px;
+  padding:20px 16px 16px;
+  box-shadow:0 8px 16px rgba(0,0,0,0.15); position:relative;
+}
+.about-number {
+  width:40px; height:40px; background:var(--brand-primary); border-radius:10px;
+  color:#fff; font-size:18px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  position:absolute; top:-18px; left:-12px;
+}
+.about-title { font-size:18px; font-weight:700; margin-bottom:6px; color:var(--brand-dark); }
+.about-text  { font-size:13px; color:black; line-height:1.45; }
+
+/* ─────────────────────────────────────────
+   TIMELINE (TRAJETÓRIA)
+───────────────────────────────────────── */
+.timeline-container {
+  width:100%; display:flex; justify-content:center;
+  margin-top:28px; overflow-x:auto; padding-bottom:10px;
+}
+.timeline {
+  display:flex; align-items:flex-start; justify-content:center;
+  gap:40px; position:relative; margin-top:36px; padding:0 20px; min-width:fit-content;
+}
+.timeline::before {
+  content:""; position:absolute; top:55px; left:0; width:100%;
+  height:5px; background:var(--brand-primary); z-index:1; border-radius:10px;
+}
+.time-item { display:flex; flex-direction:column; align-items:center; width:130px; position:relative; z-index:2; }
+.time-circle {
+  width:90px; height:90px; border-radius:50%; background:#fff;
+  border:6px solid var(--brand-primary);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; font-weight:600; color:var(--brand-dark);
+}
+.time-title { margin-top:10px; font-size:14px; font-weight:600; text-align:center; color:var(--brand-dark); }
+.time-desc  { font-size:12px; margin-top:5px; text-align:center; color:#333; max-width:120px; }
+
+/* ─────────────────────────────────────────
+   EXPERIÊNCIA — EMPRESA 1
+───────────────────────────────────────── */
+.exp-wrapper { max-width:100%; display:flex; flex-direction:column; justify-content:center; height:100%; }
+.exp-header  { display:flex; align-items:center; gap:16px; margin-top:8px; margin-bottom:14px; }
+.company-logo { width:56px; height:56px; object-fit:contain; }
+.exp-title   { font-size:28px; font-weight:700; color:#111; }
+.exp-role    { font-size:15px; color:var(--company1-primary); font-weight:600; }
+.exp-grid {
+  display:grid; grid-template-columns:1.2fr 1fr; grid-template-rows:auto 1fr;
+  gap:28px; align-items:start;
+}
+.exp-section { font-size:18px; font-weight:700; margin-bottom:10px; color:#111; }
+.exp-text    { font-size:13px; color:#333; line-height:1.6; margin-bottom:10px; }
+.exp-tags    { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.exp-tags span { background:var(--company1-primary); padding:5px 10px; border-radius:8px; font-size:11px; color:#fff; }
+.exp-visual  { display:flex; justify-content:center; grid-row:1/3; grid-column:2; align-self:center; }
+.exp-image   { width:90%; border-radius:16px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.exp-image img { width:100%; border-radius:12px; max-height:340px; object-fit:cover; }
+
+/* ─────────────────────────────────────────
+   EXPERIÊNCIA — EMPRESA 2
+───────────────────────────────────────── */
+.exp-wrapper-2 { max-width:100%; display:flex; flex-direction:column; justify-content:center; height:100%; }
+.exp-header-2  { display:flex; align-items:center; gap:16px; margin-bottom:14px; }
+.exp-title-2   { font-size:26px; font-weight:700; color:var(--company2-yellow); }
+.exp-role-2    { font-size:15px; color:var(--company2-blue1); font-weight:600; }
+.exp-grid-2    { display:grid; grid-template-columns:1.2fr 1fr; gap:28px; align-items:center; }
+.exp-section-2 { font-size:18px; font-weight:700; margin-bottom:10px; color:var(--company2-yellow); }
+.exp-text-2    { font-size:13px; color:#333; line-height:1.6; margin-bottom:10px; }
+.exp-tags-2    { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.exp-tags-2 span { background:var(--company2-blue1); padding:5px 10px; border-radius:8px; font-size:11px; color:var(--company2-yellow); }
+.exp-visual-2  { display:flex; justify-content:center; }
+.exp-image-2   { width:100%; border-radius:16px; overflow:hidden; }
+.exp-image-2 img { width:100%; border-radius:12px; object-fit:cover; }
+
+/* ─────────────────────────────────────────
+   PROJETOS / DASHBOARD
+───────────────────────────────────────── */
+.ppt-container {
+  width:100%; height:100%;
+  padding:28px 56px 20px;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  grid-template-rows:auto 1fr;
+  gap:20px;
+  align-content:center;
+}
+.ppt-title    { grid-column:1/3; color:#fff; margin-bottom:8px; }
+.ppt-title h1 { font-size:30px; font-weight:700; }
+.ppt-title p  { margin-top:5px; font-size:15px; opacity:0.8; }
+.ppt-left     { display:flex; flex-direction:column; gap:16px; overflow-y:auto; }
+.ppt-block h2 { font-size:17px; color:var(--brand-white); margin-bottom:5px; }
+.ppt-block p  { color:#ddd; font-size:13px; line-height:1.5; }
+.ppt-right    { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.dashboard-preview {
+  width:90%; aspect-ratio:16/9; border-radius:14px;
+  /* 🔧 Substitua pelo caminho do screenshot do seu dashboard */
+  background-image:url('assets/dashboard.png');
+  background-size:contain; background-position:center; background-repeat:no-repeat;
+  background-color:black;
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+.img-caption { color:#ccc; font-size:12px; opacity:0.7; }
+
+/* ─────────────────────────────────────────
+   FORMAÇÃO E CERTIFICAÇÕES
+───────────────────────────────────────── */
+.cert-wrapper  { display:flex; flex-direction:column; justify-content:center; height:100%; max-width:100%; }
+.cert-title    { font-size:34px; font-weight:700; color:var(--brand-dark); margin-bottom:4px; }
+.cert-subtitle { color:#666; margin-bottom:22px; font-size:14px; }
+.cert-grid     { display:grid; grid-template-columns:1fr 1.2fr; gap:22px; align-items:stretch; }
+.edu-card {
+  background:#0f172a; color:#fff;
+  border-radius:18px; padding:22px;
+  display:flex; align-items:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+.edu-header { display:flex; align-items:center; gap:16px; }
+.edu-logo   { width:56px; height:56px; object-fit:contain; background:#fff; padding:8px; border-radius:12px; }
+.edu-title  { font-size:17px; font-weight:700; }
+.edu-sub    { font-size:14px; opacity:0.8; margin-top:4px; }
+.edu-meta   { font-size:12px; opacity:0.6; margin-top:5px; }
+.cert-card {
+  background:#fff; border-radius:18px; padding:18px;
+  border:1px solid #eee; display:flex; flex-direction:column; gap:14px; overflow-y:auto;
+}
+.cert-block  { display:flex; flex-direction:column; }
+.cert-label  { font-size:15px; font-weight:700; color:var(--company2-yellow); margin-bottom:10px; }
+.cert-list.logos { display:flex; flex-direction:column; gap:8px; }
+.cert-item {
+  display:flex; align-items:center; gap:12px;
+  font-size:13px; color:#333; padding:7px 10px; border-radius:10px; transition:.3s;
+  text-decoration:none; color:inherit;
+}
+.cert-item img { width:24px; height:24px; object-fit:contain; flex-shrink:0; }
+.cert-item:hover { background:#f5f5f5; transform:translateX(6px); }
+
+/* ─────────────────────────────────────────
+   ALÉM DOS DADOS (hobbies / voluntariado)
+───────────────────────────────────────── */
+.human-wrapper  { max-width:100%; display:flex; flex-direction:column; justify-content:center; height:100%; }
+.human-title    { font-size:34px; font-weight:700; color:var(--brand-dark); margin-bottom:4px; }
+.human-subtitle { color:#666; margin-bottom:22px; font-size:14px; }
+.human-grid     { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+.human-card {
+  border-radius:18px; overflow:hidden; background:#fff;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15); transition:.4s;
+  display:flex; flex-direction:column;
+}
+.human-card:hover { transform:translateY(-8px); }
+.human-image {
+  height:150px; background-size:cover;
+  background-position:center; background-repeat:no-repeat; position:relative;
+}
+.human-image::after {
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.25),transparent);
+}
+.human-content { padding:14px; }
+.human-tag  { display:inline-block; background:var(--brand-primary); color:#fff; font-size:11px; padding:5px 9px; border-radius:6px; margin-bottom:8px; }
+.human-role { font-size:17px; font-weight:700; margin-bottom:6px; color:#111; }
+.human-text { font-size:13px; color:#333; line-height:1.6; }
+
+/* ─────────────────────────────────────────
+   BOTÕES DE NAVEGAÇÃO
+───────────────────────────────────────── */
+.nav-arrows {
+  position:absolute; bottom:16px; left:50%;
+  transform:translateX(-50%); display:flex; gap:20px; z-index:1000;
+}
+.nav-btn {
+  width:44px; height:44px; border-radius:50%; border:none;
+  background:rgba(0,0,0,0.3); color:#fff; font-size:20px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(6px);
+}
+
+/* ─────────────────────────────────────────
+   FULLSCREEN
+───────────────────────────────────────── */
+#btnFullscreen {
+  position:absolute; top:14px; left:20px; z-index:1000;
+  background:rgba(255,255,255,0.1); border:none; color:#fff;
+  font-size:18px; cursor:pointer; width:36px; height:36px;
+  border-radius:8px; display:flex; align-items:center;
+  justify-content:center; backdrop-filter:blur(6px);
+}
+
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.2); border-radius:4px; }
+
+
+/* ═══════════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  #presentation-scaler { display: none !important; }
+
+  html, body {
+    overflow: auto;
+    background: #111;
+    height: auto;
+  }
+
+  #mobile-view { display: block; }
+
+  .m-slide {
+    width: 100%;
+    min-height: 100svh;
+    padding: 56px 24px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .m-dark   { background: var(--brand-dark); color: #fff; }
+  .m-white  { background: #fff; color: #000; }
+  .m-company1 { background: var(--company1-primary); color: #fff; }
+
+  /* CAPA */
+  .m-cover {
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color: #fff; align-items: center; text-align: center; position: relative;
+  }
+  .m-cover::before {
+    content:""; position:absolute; width:280px; height:280px;
+    background:var(--brand-primary); filter:blur(120px); opacity:0.25;
+    top:-60px; right:-60px; pointer-events:none;
+  }
+  .m-cover-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(180deg,rgba(0,0,0,0.35),rgba(0,0,0,0.65));
+  }
+  .m-cover-content { position:relative; z-index:2; animation: fadeUp .8s ease; }
+  .m-cover-title   { font-size: 36px; font-weight:700; letter-spacing:-1px; margin-bottom:10px; }
+  .m-cover-sub     { font-size:15px; color:#cbd5f5; margin-bottom:20px; }
+  .m-cover-divider { width:48px; height:4px; background:var(--brand-primary); margin:0 auto 20px; border-radius:10px; }
+  .m-cover-tagline { font-size:14px; color:#94a3b8; }
+
+  .m-section-label {
+    font-size:11px; font-weight:700; letter-spacing:3px;
+    text-transform:uppercase; color:var(--brand-primary);
+    margin-bottom:8px; display:block;
+  }
+  .m-section-label.light { color:#94a3b8; }
+
+  .m-h1 { font-size:26px; font-weight:700; line-height:1.2; margin-bottom:6px; }
+  .m-h1.white { color:#fff; }
+  .m-h1.dark  { color:var(--brand-dark); }
+  .m-subtitle { font-size:13px; opacity:0.65; margin-bottom:22px; line-height:1.5; }
+
+  /* SOBRE MIM MOBILE */
+  .m-about-photo {
+    width:100px; height:100px; border-radius:50%;
+    border:5px solid var(--brand-primary);
+    /* 🔧 Substitua pelo caminho da sua foto */
+    background-image:url("assets/profile.jpg");
+    background-size:cover; background-position:center;
+    margin:0 auto 20px; display:block;
+  }
+  .m-about-name { text-align:center; font-size:20px; font-weight:700; color:#fff; margin-bottom:4px; }
+  .m-about-role { text-align:center; font-size:13px; color:#94a3b8; margin-bottom:24px; }
+  .m-about-cards { display:flex; flex-direction:column; gap:14px; }
+  .m-about-card {
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:14px; padding:16px 16px 14px 20px; position:relative;
+  }
+  .m-about-num {
+    position:absolute; top:-12px; left:14px;
+    width:28px; height:28px; border-radius:8px;
+    background:var(--brand-primary); color:#fff;
+    font-size:12px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .m-about-card-title { font-size:14px; font-weight:700; color:#fff; margin-bottom:4px; margin-top:4px; }
+  .m-about-card-text  { font-size:12px; color:#94a3b8; line-height:1.5; }
+
+  /* TIMELINE MOBILE */
+  .m-timeline { display:flex; flex-direction:column; gap:0; margin-top:8px; position:relative; }
+  .m-timeline::before {
+    content:""; position:absolute; left:28px; top:0; bottom:0;
+    width:3px; background:var(--brand-primary); border-radius:10px; z-index:0;
+  }
+  .m-titem {
+    display:flex; align-items:flex-start; gap:16px;
+    position:relative; z-index:1; padding-bottom:22px;
+  }
+  .m-titem:last-child { padding-bottom:0; }
+  .m-tcircle {
+    width:58px; height:58px; flex-shrink:0; border-radius:50%;
+    border:4px solid var(--brand-primary); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700; color:var(--brand-dark);
+  }
+  .m-tinfo { padding-top:10px; }
+  .m-ttitle { font-size:14px; font-weight:700; color:var(--brand-dark); }
+  .m-tdesc  { font-size:12px; color:#666; margin-top:2px; }
+
+  /* EXPERIÊNCIA MOBILE */
+  .m-exp-logo {
+    width:48px; height:48px; object-fit:contain;
+    background:#fff; padding:6px; border-radius:10px; margin-bottom:14px;
+  }
+  .m-exp-title    { font-size:22px; font-weight:700; margin-bottom:4px; }
+  .m-exp-role     { font-size:13px; font-weight:600; margin-bottom:16px; opacity:0.85; }
+  .m-exp-body     { font-size:13px; line-height:1.65; margin-bottom:14px; opacity:0.9; }
+  .m-tags         { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+  .m-tag          { padding:5px 10px; border-radius:8px; font-size:11px; font-weight:600; }
+  .m-exp-img      { width:100%; border-radius:14px; margin-top:18px; overflow:hidden; max-height:200px; }
+  .m-exp-img img  { width:100%; height:200px; object-fit:cover; display:block; }
+
+  /* PROJETO MOBILE */
+  .m-proj-header { margin-bottom:18px; }
+  .m-proj-title  { font-size:21px; font-weight:700; color:#fff; margin-bottom:4px; }
+  .m-proj-sub    { font-size:12px; color:rgba(255,255,255,0.7); }
+  .m-proj-blocks { display:flex; flex-direction:column; gap:14px; }
+  .m-proj-block  { background:rgba(255,255,255,0.08); border-radius:12px; padding:14px 16px; }
+  .m-proj-block h3 { font-size:13px; font-weight:700; color:#fff; margin-bottom:6px; }
+  .m-proj-block p  { font-size:12px; color:rgba(255,255,255,0.8); line-height:1.6; }
+  .m-proj-techs    { font-size:12px; color:rgba(255,255,255,0.9); font-weight:600; }
+  .m-dashboard {
+    width:100%; aspect-ratio:16/9; border-radius:12px;
+    /* 🔧 Substitua pelo caminho do screenshot do seu dashboard */
+    background-image:url('assets/dashboard.png');
+    background-size:contain; background-position:center; background-repeat:no-repeat;
+    background-color:rgba(0,0,0,0.4); margin-top:18px;
+  }
+
+  /* FORMAÇÃO MOBILE */
+  .m-edu-card {
+    background:var(--brand-dark); border-radius:16px;
+    padding:18px; display:flex; align-items:center; gap:14px;
+    margin-bottom:16px; color:#fff;
+  }
+  .m-edu-logo { width:48px; height:48px; object-fit:contain; background:#fff; padding:6px; border-radius:10px; flex-shrink:0; }
+  .m-edu-title { font-size:15px; font-weight:700; }
+  .m-edu-sub   { font-size:12px; opacity:0.75; margin-top:3px; }
+  .m-edu-meta  { font-size:11px; opacity:0.55; margin-top:3px; }
+
+  .m-cert-label { font-size:13px; font-weight:700; color:var(--company2-yellow); margin:14px 0 8px; }
+  .m-cert-list  { display:flex; flex-direction:column; gap:6px; }
+  .m-cert-item {
+    display:flex; align-items:center; gap:12px;
+    background:#f8f8f8; border-radius:10px; padding:10px 12px;
+    font-size:12px; color:#333; text-decoration:none; transition:.2s;
+  }
+  .m-cert-item:active { background:#eee; transform:scale(0.98); }
+  .m-cert-item img   { width:24px; height:24px; object-fit:contain; flex-shrink:0; }
+
+  /* ALÉM DOS DADOS MOBILE */
+  .m-human-cards { display:flex; flex-direction:column; gap:16px; margin-top:4px; }
+  .m-human-card  { background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(0,0,0,0.12); }
+  .m-human-img { height:130px; background-size:contain; background-position:center; background-repeat:no-repeat; background-color:#f5f5f5; }
+  .m-human-body   { padding:14px; }
+  .m-human-tag    { display:inline-block; background:var(--brand-primary); color:#fff; font-size:10px; padding:4px 8px; border-radius:6px; margin-bottom:6px; }
+  .m-human-role   { font-size:15px; font-weight:700; color:#111; margin-bottom:5px; }
+  .m-human-text   { font-size:12px; color:#444; line-height:1.6; }
+
+  /* ENCERRAMENTO MOBILE */
+  .m-final {
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:#fff; align-items:center; text-align:center;
+  }
+  .m-final::before {
+    content:""; position:absolute; width:250px; height:250px;
+    background:var(--brand-primary); filter:blur(110px); opacity:0.2;
+    bottom:-60px; right:-60px; pointer-events:none;
+  }
+  .m-final-overlay { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0.35),rgba(0,0,0,0.6)); }
+  .m-final-content { position:relative; z-index:2; animation:fadeUp .8s ease; }
+  .m-final-title   { font-size:38px; font-weight:700; letter-spacing:-1px; margin-bottom:10px; }
+  .m-final-sub     { font-size:15px; color:#cbd5f5; margin-bottom:20px; }
+  .m-final-divider { width:48px; height:4px; background:var(--brand-primary); margin:0 auto 24px; border-radius:10px; }
+  .m-final-icons   { display:flex; justify-content:center; gap:16px; }
+  .m-contact-icon {
+    width:52px; height:52px; border-radius:12px;
+    background:rgba(255,255,255,0.1); display:flex;
+    align-items:center; justify-content:center;
+    text-decoration:none; transition:.3s; backdrop-filter:blur(8px);
+  }
+  .m-contact-icon img { width:24px; height:24px; filter:brightness(0) invert(1); }
+  .m-contact-icon:active { background:var(--brand-accent); transform:scale(0.95); }
+
+  /* NAVEGAÇÃO MOBILE FIXA */
+  #mobile-nav {
+    position:fixed; bottom:0; left:0; right:0;
+    background:rgba(15,23,42,0.92); backdrop-filter:blur(16px);
+    border-top:1px solid rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:center;
+    padding:12px 16px 16px; gap:10px; z-index:9999;
+  }
+  .m-nav-btn {
+    width:42px; height:42px; border-radius:50%; border:none;
+    background:rgba(255,255,255,0.12); color:#fff; font-size:18px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; transition:.2s;
+  }
+  .m-nav-btn:active { background:var(--brand-primary); transform:scale(0.92); }
+  #m-slide-counter { font-size:13px; color:#94a3b8; font-weight:600; min-width:48px; text-align:center; }
+  #m-progress {
+    flex:1; height:3px; background:rgba(255,255,255,0.15);
+    border-radius:10px; overflow:hidden; max-width:120px;
+  }
+  #m-progress-bar { height:100%; background:var(--brand-primary); border-radius:10px; transition:width .3s; width:0%; }
+}
+
+@media (min-width: 769px) {
+  #mobile-view { display: none !important; }
+  #mobile-nav  { display: none !important; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DESKTOP VIEW (1366×768 com scaler automático)
+═══════════════════════════════════════════════════════════ -->
+<div id="presentation-scaler">
+
+  <div class="progress"><span id="progressBar"></span></div>
+
+  <div class="slider" id="slider">
+
+    <!-- ════════════════════════════════
+         SLIDE 00 — CAPA
+         🔧 Edite: nome, cargo e tagline
+    ════════════════════════════════ -->
+    <section class="slide final-slide center">
+      <div class="final-overlay"></div>
+      <div class="final-content">
+        <!-- 🔧 Seu nome completo -->
+        <h1 class="final-title">Seu Nome Completo</h1>
+        <!-- 🔧 Seu cargo atual ou pretendido -->
+        <p class="final-subtitle">Seu Cargo Atual</p>
+        <div class="final-divider"></div>
+        <!-- 🔧 Sua frase de impacto -->
+        <p style="color:#cbd5f5; font-size:18px;">Transformando dados em decisões estratégicas</p>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 01 — SOBRE MIM
+         🔧 Edite: foto (assets/profile.jpg), perfil, educação, habilidades
+    ════════════════════════════════ -->
+    <section class="slide bg-graphite">
+      <h1 style="color:#fff;">Sobre Mim</h1>
+      <div class="about-container">
+        <!-- A foto é definida no CSS via background-image: url("assets/profile.jpg") -->
+        <div class="about-photo"></div>
+        <div class="about-grid">
+          <div class="about-box">
+            <div class="about-number">01</div>
+            <div class="about-title">Perfil</div>
+            <!-- 🔧 Sua descrição em 2-3 linhas -->
+            <div class="about-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint cum maiores atque doloribus explicabo quod qui, quidem unde placeat? Molestiae recusandae quo expedita vero doloribus pariatur corrupti delectus error dolorum!</div>
+          </div>
+          <div class="about-box">
+            <div class="about-number">02</div>
+            <div class="about-title">Educação</div>
+            <!-- 🔧 Seu curso e instituição -->
+            <div class="about-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, fuga.</div>
+          </div>
+          <div class="about-box">
+            <div class="about-number">03</div>
+            <div class="about-title">Habilidades</div>
+            <!-- 🔧 Suas principais ferramentas e tecnologias -->
+            <div class="about-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, esse.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 02 — TRAJETÓRIA
+         🔧 Edite: anos, empresas e cargos
+         Para adicionar/remover items, copie/delete blocos .time-item
+    ════════════════════════════════ -->
+    <section class="slide bg-white">
+      <h1>Minha Trajetória Profissional</h1>
+      <div class="timeline-container">
+        <div class="timeline">
+
+          <!-- 🔧 Item 1 da timeline -->
+          <div class="time-item">
+            <div class="time-circle">2020</div>
+            <div class="time-title">Empresa A</div>
+            <div class="time-desc">Jovem Aprendiz</div>
+          </div>
+
+          <!-- 🔧 Item 2 -->
+          <div class="time-item">
+            <div class="time-circle">2022</div>
+            <div class="time-title">Empresa B</div>
+            <div class="time-desc">Estágio</div>
+          </div>
+
+          <!-- 🔧 Item 3 -->
+          <div class="time-item">
+            <div class="time-circle">2023</div>
+            <div class="time-title">Empresa C</div>
+            <div class="time-desc">Analista Jr</div>
+          </div>
+
+          <!-- 🔧 Adicione quantos itens precisar -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 03 — EXPERIÊNCIA EMPRESA 1
+         🔧 Edite: logo, nome, cargo, descrição, tags, foto
+    ════════════════════════════════ -->
+    <section class="slide bg-white">
+      <div class="exp-wrapper">
+        <div class="exp-grid">
+          <div class="exp-header">
+            <!-- 🔧 Logo da empresa 1 (60×60px recomendado) -->
+            <img src="assets/company1-logo.png" class="company-logo" alt="Empresa 1">
+            <div>
+              <!-- 🔧 Nome da empresa 1 -->
+              <h1 class="exp-title">Nome da Empresa 1</h1>
+              <!-- 🔧 Seu cargo na empresa 1 -->
+              <p class="exp-role">Cargo</p>
+            </div>
+          </div>
+          <div class="exp-visual">
+            <div class="exp-image">
+              <!-- 🔧 Foto sua na empresa 1 ou imagem representativa -->
+              <img src="assets/company1-photo.jpg" alt="Foto na empresa 1">
+            </div>
+          </div>
+          <div>
+            <h2 class="exp-section">Atuação</h2>
+            <!-- 🔧 Descreva suas responsabilidades e conquistas -->
+            <p class="exp-text">Descreva aqui o que você fazia na empresa: responsabilidades, projetos, impacto gerado. Use 2-3 parágrafos para cobrir contexto, atividades e resultados.</p>
+            <p class="exp-text">Segundo parágrafo com mais detalhes sobre aprendizados e contribuições técnicas.</p>
+            <div class="exp-tags">
+              <!-- 🔧 Adicione suas palavras-chave de atuação -->
+              <span>Governança de Dados</span>
+              <span>Análise Exploratória</span>
+              <span>Big Data</span>
+              <span>SQL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 04 — EXPERIÊNCIA EMPRESA 2
+         🔧 Edite: logo, nome, cargo, descrição, tags, foto
+    ════════════════════════════════ -->
+    <section class="slide bg-white">
+      <div class="exp-wrapper-2">
+        <div class="exp-header-2">
+          <!-- 🔧 Logo da empresa 2 -->
+          <img src="assets/company2-logo.png" class="company-logo" alt="Empresa 2">
+          <div>
+            <!-- 🔧 Nome da empresa 2 -->
+            <h1 class="exp-title-2">Nome da Empresa 2</h1>
+            <!-- 🔧 Seu cargo na empresa 2 -->
+            <p class="exp-role-2">Seu Cargo</p>
+          </div>
+        </div>
+        <div class="exp-grid-2">
+          <div>
+            <h2 class="exp-section-2">Atuação</h2>
+            <!-- 🔧 Descreva sua experiência na empresa 2 -->
+            <p class="exp-text-2">Descreva aqui o que você fazia: contexto da empresa, suas responsabilidades e o valor que gerou. Seja específico sobre resultados mensuráveis quando possível.</p>
+            <p class="exp-text-2">Complemento com mais detalhes sobre o aprendizado técnico e as ferramentas utilizadas.</p>
+            <div class="exp-tags-2">
+              <!-- 🔧 Tags de atuação na empresa 2 -->
+              <span>Relatórios</span>
+              <span>Dashboards</span>
+              <span>Power BI</span>
+            </div>
+          </div>
+          <div class="exp-visual-2">
+            <div class="exp-image-2">
+              <!-- 🔧 Foto ou imagem representativa da empresa 2 -->
+              <img src="assets/company2-photo.jpg" alt="Empresa 2" style="width:100%; border-radius:12px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 05 — PROJETO 1
+         🔧 Edite: título, subtítulo, contexto, objetivo, insights, tecnologias
+         🔧 Troque assets/dashboard.png pelo screenshot do seu projeto
+    ════════════════════════════════ -->
+    <section class="slide bg-graphite">
+      <div class="ppt-container">
+        <div class="ppt-title">
+          <!-- 🔧 Nome do projeto 1 -->
+          <h1>Nome do Projeto 1</h1>
+          <!-- 🔧 Subtítulo descritivo -->
+          <p>Subtítulo descritivo do projeto — impacto gerado</p>
+        </div>
+        <div class="ppt-left">
+          <div class="ppt-block">
+            <h2>Contexto</h2>
+            <!-- 🔧 Qual era o problema? -->
+            <p>• Descreva o problema que o projeto resolveu<br>• Qual era a dor do negócio ou da equipe<br>• Por que era importante resolvê-lo</p>
+          </div>
+          <div class="ppt-block">
+            <h2>Objetivo</h2>
+            <!-- 🔧 Qual era a meta? -->
+            <p>Descreva em uma frase o que o projeto deveria entregar e qual era o critério de sucesso.</p>
+          </div>
+          <div class="ppt-block">
+            <h2>Resultados</h2>
+            <!-- 🔧 Quais foram os insights ou impactos? -->
+            <p>• Resultado 1 (ex: redução de X% no tempo)<br>• Resultado 2<br>• Resultado 3</p>
+          </div>
+          <div class="ppt-block">
+            <h2>Tecnologias</h2>
+            <!-- 🔧 Stack usada no projeto -->
+            <p>Python • SQL • Power BI • Excel</p>
+          </div>
+        </div>
+        <div class="ppt-right">
+          <!-- 🔧 Screenshot do dashboard (assets/dashboard.png) -->
+          <div class="dashboard-preview"></div>
+          <!-- 🔧 Legenda da imagem -->
+          <p class="img-caption">Dashboard desenvolvido (Power BI)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 06 — PROJETO 2
+         🔧 Mesmo padrão do slide 05
+    ════════════════════════════════ -->
+    <section class="slide bg-company1">
+      <div class="ppt-container">
+        <div class="ppt-title">
+          <!-- 🔧 Nome do projeto 2 -->
+          <h1>Nome do Projeto 2</h1>
+          <p>Subtítulo descritivo do projeto 2</p>
+        </div>
+        <div class="ppt-left">
+          <div class="ppt-block">
+            <h2>Contexto</h2>
+            <p>• Problema que levou ao projeto<br>• Impacto no dia a dia da equipe<br>• Necessidade identificada</p>
+          </div>
+          <div class="ppt-block">
+            <h2>Objetivo</h2>
+            <p>Meta clara do projeto e o valor esperado para o time ou empresa.</p>
+          </div>
+          <div class="ppt-block">
+            <h2>Resultados</h2>
+            <p>• Resultado principal obtido<br>• Ganho de eficiência<br>• Outros impactos positivos</p>
+          </div>
+          <div class="ppt-block">
+            <h2>Tecnologias</h2>
+            <!-- 🔧 Stack do projeto 2 -->
+            <p>Python • SQL • QuickSight • AWS</p>
+          </div>
+        </div>
+        <div class="ppt-right">
+          <!-- 🔧 Screenshot do projeto 2 — pode usar outro arquivo de imagem -->
+          <div class="dashboard-preview" style="background-image:url('assets/dashboard2.png');"></div>
+          <p class="img-caption">Dashboard desenvolvido (QuickSight)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 07 — FORMAÇÃO & CERTIFICAÇÕES
+         🔧 Edite: instituição, curso, certificações e links do Credly
+    ════════════════════════════════ -->
+    <section class="slide bg-white">
+      <div class="cert-wrapper">
+        <h1 class="cert-title">Formação &amp; Certificações</h1>
+        <p class="cert-subtitle">Base acadêmica sólida aliada ao desenvolvimento contínuo em tecnologia e dados</p>
+        <div class="cert-grid">
+
+          <!-- CARD DE FORMAÇÃO -->
+          <div class="edu-card">
+            <div class="edu-header">
+              <!-- 🔧 Logo da sua instituição de ensino -->
+              <img src="assets/university-logo.png" class="edu-logo" alt="Universidade">
+              <div>
+                <!-- 🔧 Nome do curso -->
+                <div class="edu-title">Nome do Curso</div>
+                <!-- 🔧 Nome da instituição -->
+                <div class="edu-sub">Nome da Instituição</div>
+                <!-- 🔧 Status e semestre -->
+                <div class="edu-meta">Cursando • 4º semestre</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD DE CERTIFICAÇÕES -->
+          <div class="cert-card">
+            <div class="cert-block">
+              <!-- 🔧 Categoria 1 de certificações -->
+              <div class="cert-label">Data &amp; Analytics</div>
+              <div class="cert-list logos">
+                <!-- 🔧 Certificação 1 — troque o href pelo link do seu badge no Credly -->
+                <a href="https://www.credly.com/badges/SEU-BADGE-ID" target="_blank" class="cert-item">
+                  <!-- 🔧 Logo da certificação (24×24px) -->
+                  <img src="assets/cert1-logo.png" alt="">
+                  Nome da Certificação 1 — Emissor
+                </a>
+                <!-- 🔧 Certificação 2 -->
+                <a href="https://www.credly.com/badges/SEU-BADGE-ID" target="_blank" class="cert-item">
+                  <img src="assets/cert2-logo.png" alt="">
+                  Nome da Certificação 2 — Emissor
+                </a>
+                <!-- 🔧 Certificação 3 — pode adicionar quantas quiser -->
+                <a href="https://www.credly.com/badges/SEU-BADGE-ID" target="_blank" class="cert-item">
+                  <img src="assets/cert3-logo.png" alt="">
+                  Nome da Certificação 3 — Emissor
+                </a>
+              </div>
+            </div>
+            <div class="cert-block">
+              <!-- 🔧 Categoria 2 de certificações -->
+              <div class="cert-label">Outros</div>
+              <div class="cert-list logos">
+                <a href="https://www.credly.com/badges/SEU-BADGE-ID" target="_blank" class="cert-item">
+                  <img src="assets/cert4-logo.png" alt="">
+                  Nome da Certificação 4 — Emissor
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 08 — ALÉM DOS DADOS
+         🔧 Edite: voluntariado, esportes, hobbies
+         Para usar mais de 2 cards, adicione .human-card e ajuste o grid
+    ════════════════════════════════ -->
+    <section class="slide bg-white">
+      <div class="human-wrapper">
+        <h1 class="human-title">Além dos Dados</h1>
+        <p class="human-subtitle">Experiências que fortalecem minha visão, colaboração e impacto</p>
+        <div class="human-grid">
+
+          <!-- CARD 1 -->
+          <div class="human-card">
+            <!-- 🔧 Imagem do voluntariado/hobby (assets/activity1.jpg) -->
+            <div class="human-image" style="background-image:url('assets/activity1.jpg');background-size:contain;background-color:#f5f5f5;"></div>
+            <div class="human-content">
+              <!-- 🔧 Tag: "Voluntariado", "Esporte", "Comunidade", etc. -->
+              <div class="human-tag">Voluntariado</div>
+              <!-- 🔧 Nome da atividade -->
+              <h2 class="human-role">Nome da Atividade 1</h2>
+              <!-- 🔧 Descrição e o que você aprende/contribui -->
+              <p class="human-text">Descreva sua atuação, o impacto e o que você leva dessa experiência para o lado profissional.</p>
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="human-card">
+            <!-- 🔧 Imagem da segunda atividade -->
+            <div class="human-image" style="background-image:url('assets/activity2.jpg');background-size:contain;background-color:#f5f5f5;"></div>
+            <div class="human-content">
+              <!-- 🔧 Tag do segundo card -->
+              <div class="human-tag">Esporte</div>
+              <h2 class="human-role">Nome da Atividade 2</h2>
+              <p class="human-text">Descreva sua segunda atividade extracurricular e os valores que ela desenvolve em você.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         SLIDE 09 — ENCERRAMENTO
+         🔧 Edite: links do GitHub e LinkedIn
+    ════════════════════════════════ -->
+    <section class="slide final-slide">
+      <div class="final-overlay"></div>
+      <div class="final-content">
+        <h1 class="final-title">Obrigado</h1>
+        <p class="final-subtitle">Vamos transformar dados em decisões juntos?</p>
+        <div class="final-divider"></div>
+        <div class="final-contact">
+          <!-- 🔧 Troque pelo seu usuário do GitHub -->
+          <a href="https://github.com/SEU-USUARIO" target="_blank" class="contact-icon">
+            <img src="assets/github.png" alt="GitHub">
+          </a>
+          <!-- 🔧 Troque pelo seu perfil do LinkedIn -->
+          <a href="https://www.linkedin.com/in/SEU-PERFIL/" target="_blank" class="contact-icon">
+            <img src="assets/linkedin.png" alt="LinkedIn">
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /#slider -->
+
+  <div class="dots" id="dots"></div>
+
+  <div class="nav-arrows">
+    <button class="nav-btn" id="btnPrev">&#8592;</button>
+    <button class="nav-btn" id="btnNext">&#8594;</button>
+  </div>
+
+  <button id="btnFullscreen" onclick="toggleFullscreen()">&#x26F6;</button>
+</div><!-- /#presentation-scaler -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MOBILE VIEW
+═══════════════════════════════════════════════════════════ -->
+<div id="mobile-view">
+
+  <!-- SLIDE 0 — CAPA MOBILE -->
+  <div class="m-slide m-cover" data-slide="0">
+    <div class="m-cover-overlay"></div>
+    <div class="m-cover-content">
+      <!-- 🔧 Seu nome -->
+      <h1 class="m-cover-title">Seu Nome Completo</h1>
+      <!-- 🔧 Seu cargo -->
+      <p class="m-cover-sub">Analista de Dados Jr</p>
+      <div class="m-cover-divider"></div>
+      <!-- 🔧 Sua tagline -->
+      <p class="m-cover-tagline">Transformando dados em decisões estratégicas</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 1 — SOBRE MIM MOBILE -->
+  <div class="m-slide m-dark" data-slide="1">
+    <span class="m-section-label light">Sobre Mim</span>
+    <!-- A foto é via CSS background-image: url("assets/profile.jpg") -->
+    <div class="m-about-photo"></div>
+    <!-- 🔧 Seu nome -->
+    <p class="m-about-name">Seu Nome Completo</p>
+    <!-- 🔧 Seu cargo -->
+    <p class="m-about-role">Analista de Dados Jr</p>
+    <div class="m-about-cards">
+      <div class="m-about-card">
+        <div class="m-about-num">01</div>
+        <div class="m-about-card-title">Perfil</div>
+        <!-- 🔧 Descrição pessoal -->
+        <div class="m-about-card-text">Analista de Dados Jr com foco em insights estratégicos, exploração de dados e visualização aplicada.</div>
+      </div>
+      <div class="m-about-card">
+        <div class="m-about-num">02</div>
+        <div class="m-about-card-title">Educação</div>
+        <!-- 🔧 Seu curso e instituição -->
+        <div class="m-about-card-text">Tecnólogo em ADS — SENAC (4º semestre)</div>
+      </div>
+      <div class="m-about-card">
+        <div class="m-about-num">03</div>
+        <div class="m-about-card-title">Habilidades</div>
+        <!-- 🔧 Suas ferramentas principais -->
+        <div class="m-about-card-text">Python, SQL, Power BI, AWS, QuickSight, Git e Automação.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 — TRAJETÓRIA MOBILE -->
+  <div class="m-slide m-white" data-slide="2">
+    <span class="m-section-label"></span>
+    <h1 class="m-h1 dark">Minha Trajetória Profissional</h1>
+    <p class="m-subtitle">Do aprendizado ao mercado de dados</p>
+    <div class="m-timeline">
+
+      <!-- 🔧 Item da timeline — copie/delete quantos precisar -->
+      <div class="m-titem">
+        <div class="m-tcircle">2020</div>
+        <div class="m-tinfo">
+          <div class="m-ttitle">Empresa A</div>
+          <div class="m-tdesc">Jovem Aprendiz</div>
+        </div>
+      </div>
+      <div class="m-titem">
+        <div class="m-tcircle">2022</div>
+        <div class="m-tinfo">
+          <div class="m-ttitle">Empresa B</div>
+          <div class="m-tdesc">Estágio</div>
+        </div>
+      </div>
+      <div class="m-titem">
+        <div class="m-tcircle">2023</div>
+        <div class="m-tinfo">
+          <div class="m-ttitle">Empresa C</div>
+          <div class="m-tdesc">Analista Jr</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — EXPERIÊNCIA EMPRESA 1 MOBILE -->
+  <div class="m-slide m-white" data-slide="3">
+    <span class="m-section-label"></span>
+    <!-- 🔧 Logo da empresa 1 -->
+    <img src="assets/company1-logo.png" class="m-exp-logo" alt="Empresa 1">
+    <!-- 🔧 Nome e cargo -->
+    <h2 class="m-exp-title" style="color:#111;">Nome da Empresa 1</h2>
+    <p class="m-exp-role" style="color:var(--company1-primary);">Estagiário de Dados</p>
+    <!-- 🔧 Descrição resumida (mobile é mais curta que desktop) -->
+    <p class="m-exp-body" style="color:#444;">Descreva suas principais responsabilidades e o impacto do seu trabalho. Seja objetivo — mobile tem espaço menor.</p>
+    <div class="m-tags">
+      <!-- 🔧 Tags de atuação -->
+      <span class="m-tag" style="background:rgba(255,98,0,0.12);color:var(--company1-primary);">Tag 1</span>
+      <span class="m-tag" style="background:rgba(255,98,0,0.12);color:var(--company1-primary);">Tag 2</span>
+      <span class="m-tag" style="background:rgba(255,98,0,0.12);color:var(--company1-primary);">SQL</span>
+    </div>
+    <!-- 🔧 Foto na empresa 1 -->
+    <div class="m-exp-img">
+      <img src="assets/company1-photo.jpg" alt="Empresa 1">
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — EXPERIÊNCIA EMPRESA 2 MOBILE -->
+  <div class="m-slide m-white" data-slide="4">
+    <span class="m-section-label"></span>
+    <!-- 🔧 Logo da empresa 2 -->
+    <img src="assets/company2-logo.png" class="m-exp-logo" alt="Empresa 2">
+    <h2 class="m-exp-title" style="color:var(--company2-yellow);">Nome da Empresa 2</h2>
+    <p class="m-exp-role" style="color:var(--company2-blue1);">Estagiário de Dados</p>
+    <p class="m-exp-body" style="color:#444;">Minha primeira experiência na área de dados. Responsável pela construção de relatórios e análises para apoio à tomada de decisão.</p>
+    <div class="m-tags">
+      <span class="m-tag" style="background:rgba(37,74,145,0.1);color:var(--company2-blue1);">Tag 1</span>
+      <span class="m-tag" style="background:rgba(37,74,145,0.1);color:var(--company2-blue1);">Tag 2</span>
+    </div>
+    <!-- 🔧 Foto da empresa 2 -->
+    <div class="m-exp-img">
+      <img src="assets/company2-photo.jpg" alt="Empresa 2">
+    </div>
+  </div>
+
+  <!-- SLIDE 5 — PROJETO 1 MOBILE -->
+  <div class="m-slide m-dark" data-slide="5">
+    <span class="m-section-label light"></span>
+    <div class="m-proj-header">
+      <!-- 🔧 Título e subtítulo do projeto 1 -->
+      <h2 class="m-proj-title">Nome do Projeto 1</h2>
+      <p class="m-proj-sub">Subtítulo descritivo</p>
+    </div>
+    <div class="m-proj-blocks">
+      <div class="m-proj-block">
+        <h3>Contexto</h3>
+        <!-- 🔧 Problema que o projeto resolveu -->
+        <p>Descreva o problema: dados descentralizados, processo manual, falta de visibilidade, etc.</p>
+      </div>
+      <div class="m-proj-block">
+        <h3>Objetivo</h3>
+        <!-- 🔧 Meta do projeto -->
+        <p>Monitorar desempenho, gerar insights e apoiar decisões com dados.</p>
+      </div>
+      <div class="m-proj-block">
+        <h3>Tecnologias</h3>
+        <!-- 🔧 Stack utilizada -->
+        <p class="m-proj-techs">Python • SQL • Power BI • Excel</p>
+      </div>
+    </div>
+    <!-- 🔧 Screenshot do dashboard (assets/dashboard.png) -->
+    <div class="m-dashboard"></div>
+  </div>
+
+  <!-- SLIDE 6 — PROJETO 2 MOBILE -->
+  <div class="m-slide m-company1" data-slide="6">
+    <span class="m-section-label light"></span>
+    <div class="m-proj-header">
+      <!-- 🔧 Título e subtítulo do projeto 2 -->
+      <h2 class="m-proj-title">Nome do Projeto 2</h2>
+      <p class="m-proj-sub">Subtítulo descritivo</p>
+    </div>
+    <div class="m-proj-blocks">
+      <div class="m-proj-block" style="background:rgba(0,0,0,0.15);">
+        <h3>Contexto</h3>
+        <p>Alta manualidade no processo e visualização pouco eficiente para tomada de decisão.</p>
+      </div>
+      <div class="m-proj-block" style="background:rgba(0,0,0,0.15);">
+        <h3>Objetivo</h3>
+        <p>Solução automatizada para autosserviço da equipe.</p>
+      </div>
+      <div class="m-proj-block" style="background:rgba(0,0,0,0.15);">
+        <h3>Tecnologias</h3>
+        <!-- 🔧 Stack do projeto 2 -->
+        <p class="m-proj-techs">Python • SQL • QuickSight • AWS</p>
+      </div>
+    </div>
+    <!-- 🔧 Screenshot do projeto 2 (pode reutilizar dashboard.png ou criar dashboard2.png no CSS) -->
+    <div class="m-dashboard" style="background-image:url('assets/dashboard2.png');"></div>
+  </div>
+
+  <!-- SLIDE 7 — FORMAÇÃO & CERTS MOBILE -->
+  <div class="m-slide m-white" data-slide="7">
+    <span class="m-section-label"></span>
+    <h1 class="m-h1 dark">Formação &amp; Certificações</h1>
+    <p class="m-subtitle">Base acadêmica aliada ao desenvolvimento contínuo</p>
+
+    <!-- 🔧 Card de formação acadêmica -->
+    <div class="m-edu-card">
+      <img src="assets/university-logo.png" class="m-edu-logo" alt="Universidade">
+      <div>
+        <!-- 🔧 Nome do curso, instituição e status -->
+        <div class="m-edu-title">Nome do Curso</div>
+        <div class="m-edu-sub">Nome da Instituição</div>
+        <div class="m-edu-meta">Cursando • 4º semestre</div>
+      </div>
+    </div>
+
+    <!-- 🔧 Categoria 1 de certs -->
+    <div class="m-cert-label">Data &amp; Analytics</div>
+    <div class="m-cert-list">
+      <!-- 🔧 Certificação 1 — troque o href pelo link do Credly -->
+      <a class="m-cert-item" href="https://www.credly.com/badges/SEU-BADGE-ID" target="_blank">
+        <img src="assets/cert1-logo.png" alt="">
+        Nome da Certificação 1 — Emissor
+      </a>
+      <!-- 🔧 Certificação 2 -->
+      <a class="m-cert-item" href="https://www.credly.com/badges/SEU-BADGE-ID" target="_blank">
+        <img src="assets/cert2-logo.png" alt="">
+        Nome da Certificação 2 — Emissor
+      </a>
+    </div>
+
+    <!-- 🔧 Categoria 2 de certs -->
+    <div class="m-cert-label">Outros</div>
+    <div class="m-cert-list">
+      <a class="m-cert-item" href="https://www.credly.com/badges/SEU-BADGE-ID" target="_blank">
+        <img src="assets/cert3-logo.png" alt="">
+        Nome da Certificação 3 — Emissor
+      </a>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 — ALÉM DOS DADOS MOBILE -->
+  <div class="m-slide m-white" data-slide="8">
+    <span class="m-section-label"></span>
+    <h1 class="m-h1 dark">Além dos Dados</h1>
+    <p class="m-subtitle">Experiências que fortalecem minha visão e impacto</p>
+    <div class="m-human-cards">
+
+      <!-- 🔧 Card 1 -->
+      <div class="m-human-card">
+        <div class="m-human-img" style="background-image:url('assets/activity1.jpg');"></div>
+        <div class="m-human-body">
+          <!-- 🔧 Tag do card 1 -->
+          <span class="m-human-tag">Voluntariado</span>
+          <h3 class="m-human-role">Nome da Atividade 1</h3>
+          <p class="m-human-text">Descrição do que você faz e o que essa experiência agrega ao seu perfil profissional.</p>
+        </div>
+      </div>
+
+      <!-- 🔧 Card 2 -->
+      <div class="m-human-card">
+        <div class="m-human-img" style="background-image:url('assets/activity2.jpg');background-color:#f5f5f5;"></div>
+        <div class="m-human-body">
+          <span class="m-human-tag">Esporte</span>
+          <h3 class="m-human-role">Nome da Atividade 2</h3>
+          <p class="m-human-text">Valores como disciplina, consistência e trabalho em equipe que aplico no dia a dia profissional.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 9 — ENCERRAMENTO MOBILE -->
+  <div class="m-slide m-final" data-slide="9">
+    <div class="m-final-overlay"></div>
+    <div class="m-final-content">
+      <h1 class="m-final-title">Obrigado</h1>
+      <p class="m-final-sub">Vamos transformar dados em decisões juntos?</p>
+      <div class="m-final-divider"></div>
+      <div class="m-final-icons">
+        <!-- 🔧 Seu GitHub -->
+        <a href="https://github.com/SEU-USUARIO" target="_blank" class="m-contact-icon">
+          <img src="assets/github.png" alt="GitHub">
+        </a>
+        <!-- 🔧 Seu LinkedIn -->
+        <a href="https://www.linkedin.com/in/SEU-PERFIL/" target="_blank" class="m-contact-icon">
+          <img src="assets/linkedin.png" alt="LinkedIn">
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#mobile-view -->
+
+
+<!-- NAVEGAÇÃO MOBILE FIXADA -->
+<nav id="mobile-nav">
+  <button class="m-nav-btn" id="mBtnPrev">&#8592;</button>
+  <div id="m-progress"><div id="m-progress-bar"></div></div>
+  <span id="m-slide-counter">1 / 10</span>
+  <div id="m-progress" style="display:none"></div>
+  <button class="m-nav-btn" id="mBtnNext">&#8594;</button>
+</nav>
+
+
+<script>
+/* ══════════════════════════════════════════
+   LÓGICA DESKTOP — não precisa editar isso
+══════════════════════════════════════════ */
+const slider      = document.getElementById('slider');
+const slides      = document.querySelectorAll('.slide');
+const dotsEl      = document.getElementById('dots');
+let index = 0;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.classList.add('dot');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function update() {
+  slider.style.transform = `translateX(-${index * 1366}px)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === index));
+  document.getElementById('progressBar').style.width = ((index + 1) / slides.length * 100) + '%';
+  document.getElementById('btnPrev').style.opacity = index === 0 ? '0.3' : '1';
+  document.getElementById('btnNext').style.opacity = index === slides.length - 1 ? '0.3' : '1';
+}
+
+function goTo(i) {
+  index = Math.max(0, Math.min(i, slides.length - 1));
+  update();
+}
+
+document.getElementById('btnPrev').onclick = () => goTo(index - 1);
+document.getElementById('btnNext').onclick = () => goTo(index + 1);
+
+window.addEventListener('wheel', e => {
+  if (e.deltaY > 0) goTo(index + 1); else goTo(index - 1);
+}, { passive: true });
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(index + 1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(index - 1);
+});
+
+let touchStartX = 0, touchStartY = 0;
+slider.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].clientX;
+  touchStartY = e.changedTouches[0].clientY;
+}, { passive: true });
+
+slider.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+    if (dx < 0) goTo(index + 1); else goTo(index - 1);
+  }
+}, { passive: true });
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+}
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.getElementById('btnFullscreen');
+  if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
+  scalePresentation();
+});
+
+function scalePresentation() {
+  const scale  = Math.min(window.innerWidth / 1366, window.innerHeight / 768);
+  const scaler = document.getElementById('presentation-scaler');
+  scaler.style.transform = `scale(${scale})`;
+  scaler.style.left = `${(window.innerWidth  - 1366 * scale) / 2}px`;
+  scaler.style.top  = `${(window.innerHeight - 768  * scale) / 2}px`;
+}
+window.addEventListener('resize', scalePresentation);
+scalePresentation();
+update();
+lucide.createIcons();
+
+
+/* ══════════════════════════════════════════
+   LÓGICA MOBILE — não precisa editar isso
+══════════════════════════════════════════ */
+(function () {
+  const mSlides = document.querySelectorAll('#mobile-view [data-slide]');
+  const total   = mSlides.length;
+  let mIndex    = 0;
+
+  const counter = document.getElementById('m-slide-counter');
+  const bar     = document.getElementById('m-progress-bar');
+  const btnPrev = document.getElementById('mBtnPrev');
+  const btnNext = document.getElementById('mBtnNext');
+
+  function mUpdate() {
+    mSlides[mIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    counter.textContent   = `${mIndex + 1} / ${total}`;
+    bar.style.width       = ((mIndex + 1) / total * 100) + '%';
+    btnPrev.style.opacity = mIndex === 0           ? '0.3' : '1';
+    btnNext.style.opacity = mIndex === total - 1   ? '0.3' : '1';
+  }
+
+  function mGoTo(i) {
+    mIndex = Math.max(0, Math.min(i, total - 1));
+    mUpdate();
+  }
+
+  btnPrev.onclick = () => mGoTo(mIndex - 1);
+  btnNext.onclick = () => mGoTo(mIndex + 1);
+
+  let mTouchX = 0, mTouchY = 0;
+  const mView = document.getElementById('mobile-view');
+
+  mView.addEventListener('touchstart', e => {
+    mTouchX = e.changedTouches[0].clientX;
+    mTouchY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  mView.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - mTouchX;
+    const dy = e.changedTouches[0].clientY - mTouchY;
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
+      if (dy < 0) mGoTo(mIndex + 1); else mGoTo(mIndex - 1);
+    }
+  }, { passive: true });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = parseInt(entry.target.dataset.slide);
+        if (!isNaN(idx) && idx !== mIndex) {
+          mIndex = idx;
+          counter.textContent   = `${mIndex + 1} / ${total}`;
+          bar.style.width       = ((mIndex + 1) / total * 100) + '%';
+          btnPrev.style.opacity = mIndex === 0         ? '0.3' : '1';
+          btnNext.style.opacity = mIndex === total - 1 ? '0.3' : '1';
+        }
+      }
+    });
+  }, { threshold: 0.55 });
+
+  mSlides.forEach(s => observer.observe(s));
+  mUpdate();
+})();
+</script>
+
+</body>
+</html>
